@@ -7,7 +7,6 @@
   <link rel="icon" href="logonew.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="script.js"></script>
   <link href="styles.css" rel="stylesheet"/>
   <style>
     .carousel {
@@ -52,29 +51,15 @@
         <i class="fas fa-leaf text-2xl"></i>
         <span>PlantDoc</span>
       </div>
-
-      <!-- Hamburger for mobile -->
-      <button id="menu-btn" class="md:hidden text-gray-800 focus:outline-none">
-        <i class="fas fa-bars fa-2x"></i>
-      </button>
-
-      <!-- Navigation links -->
-      <div id="nav-links" class="hidden md:flex gap-8">
+      <div class="flex gap-8">
         <a href="#home" class="text-gray-800 font-medium hover:text-green-500">Home</a>
         <a href="#about" class="text-gray-800 font-medium hover:text-green-500">About</a>
         <a href="#crops" class="text-gray-800 font-medium hover:text-green-500">Crop Guide</a>
-        <a href="check.html" class="text-gray-800 font-medium hover:text-green-500">Health Tracker</a>
+        <a href="check.html" class="text-gray-800 font-medium hover:text-green-500"> Health Tracker</a>
+
         <button id="logout-btn" class="text-gray-800 font-medium hover:text-red-500">Logout</button>
       </div>
     </nav>
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
-      <a href="#home" class="block px-[5%] py-2 text-gray-800 hover:bg-gray-100">Home</a>
-      <a href="#about" class="block px-[5%] py-2 text-gray-800 hover:bg-gray-100">About</a>
-      <a href="#crops" class="block px-[5%] py-2 text-gray-800 hover:bg-gray-100">Crop Guide</a>
-      <a href="check.html" class="block px-[5%] py-2 text-gray-800 hover:bg-gray-100">Health Tracker</a>
-      <button id="mobile-logout-btn" class="w-full text-left px-[5%] py-2 text-gray-800 hover:bg-gray-100">Logout</button>
-    </div>
   </header>
 
   <!-- Main Grid Layout -->
@@ -91,29 +76,6 @@
           <img src="https://i.ibb.co/FLJCJMWk/reversed.jpg" alt="Healthy Plants" style="width: 400px;" class="rounded-2xl shadow-xl">
         </div>
       </div>
-
-      <!-- Enhanced About Section -->
-      <div class="bg-white rounded-2xl shadow-lg p-8 mb-8" id="about">
-        <h2 class="text-3xl font-bold mb-6 text-green-500">About PlantDoc</h2>
-        <div class="space-y-6">
-          <p class="text-gray-700 text-lg">
-            PlantDoc revolutionizes plant healthcare by combining artificial intelligence with agricultural expertise to provide instant, accurate plant disease diagnosis right at your fingertips.
-          </p>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-            <div class="feature-card bg-green-50 p-6 rounded-xl shadow-md border-l-4 border-green-500">
-              <div class="text-green-500 text-3xl mb-4">
-                <i class="fas fa-bolt"></i>
-              </div>
-              <h3 class="text-xl font-bold mb-2">Lightning Fast</h3>
-              <p class="text-gray-600">Get results in seconds with our advanced AI-powered image recognition technology.</p>
-            </div>
-
-            <div class="feature-card bg-green-50 p-6 rounded-xl shadow-md border-l-4 border-green-500">
-              <div class="text-green-500 text-3xl mb-4">
-                <i class="fas fa-chart-line"></i>
-              </div>
-              <h3 class="text-xl font-bold mb-2">95% Accuracy</h3>
 
       <!-- Enhanced About Section -->
       <div class="bg-white rounded-2xl shadow-lg p-8 mb-8" id="about">
