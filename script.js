@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const { user } = await signInWithEmailAndPassword(auth, email, password);
         alert('Login successful! Welcome ' + user.email);
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
       } catch (err) {
         alert('Login failed: ' + err.message);
       }
