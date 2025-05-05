@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PlantDoc | Disease Detection</title>
+  <link rel="icon" href="logonew.png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="script.js"></script>
+  <link href="styles.css" rel="stylesheet"/>
+  <style>
+    .carousel {
+      transition: transform 0.5s ease-in-out;
+    }
+    .carousel-slide {
+      min-width: 100%;
+    }
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+    .carousel-dot.active {
+      background-color: #4ade80;
+    }
+    .region-card {
+      transition: all 0.3s ease;
+    }
+    .region-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .feature-card {
+      transition: all 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-200 min-h-screen text-gray-800">
+  <!-- Header -->
+  <header class="bg-white shadow-md fixed w-full top-0 z-50">
+    <nav class="flex justify-between items-center py-4 px-[5%] max-w-7xl mx-auto">
+      <div class="flex items-center gap-2 text-2xl font-bold text-green-500">
+        <i class="fas fa-leaf text-2xl"></i>
+        <span>PlantDoc</span>
+      </div>
+
+      <!-- Hamburger for mobile -->
+      <button id="menu-btn" class="md:hidden text-gray-800 focus:outline-none">
+        <i class="fas fa-bars fa-2x"></i>
+      </button>
+
+      <!-- Navigation links -->
+      <div id="nav-links" class="hidden md:flex gap-8">
+        <a href="#home" class="text-gray-800 font-medium hover:text-green-500">Home</a>
+        <a href="#about" class="text-gray-800 font-medium hover:text-green-500">About</a>
+        <a href="#crops" class="text-gray-800 font-medium hover:text-green-500">Crop Guide</a>
+        <a href="check.html" class="text-gray-800 font-medium hover:text-green-500">Health Tracker</a>
+        <button id="logout-btn" class="text-gray-800 font-medium hover:text-red-500">Logout</button>
+      </div>
+    </nav>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+      <a href="#home" class="block px-[5%] py-2 text-gray-800 hover:bg-gray-100">Home</a>
+      <a href="#about" class="block px-[5%] py-2 text-gray-800 hover:bg-gray-100">About</a>
+      <a href="#crops" class="block px-[5%] py-2 text-gray-800 hover:bg-gray-100">Crop Guide</a>
+      <a href="check.html" class="block px-[5%] py-2 text-gray-800 hover:bg-gray-100">Health Tracker</a>
+      <button id="mobile-logout-btn" class="w-full text-left px-[5%] py-2 text-gray-800 hover:bg-gray-100">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Grid Layout -->
+  <main class="pt-24 px-[5%] max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Left Column - Home Content -->
+    <div class="flex flex-col" id="home">
+      <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+        <h1 class="text-4xl font-bold mb-6 leading-tight">Detect Plant Diseases <span class="text-green-500">in Seconds</span></h1>
+        <p class="text-lg text-gray-600 mb-8">
+          Our cutting-edge AI technology instantly identifies plant diseases with 95% accuracy.
+          Simply snap a photo of your plant and receive expert diagnosis and tailored treatment solutions.
+        </p>
+        <div class="flex-1 transform scale-90 hover:scale-95 transition duration-500">
+          <img src="https://i.ibb.co/FLJCJMWk/reversed.jpg" alt="Healthy Plants" style="width: 400px;" class="rounded-2xl shadow-xl">
+        </div>
+      </div>
+
+      <!-- Enhanced About Section -->
+      <div class="bg-white rounded-2xl shadow-lg p-8 mb-8" id="about">
+        <h2 class="text-3xl font-bold mb-6 text-green-500">About PlantDoc</h2>
+        <div class="space-y-6">
+          <p class="text-gray-700 text-lg">
+            PlantDoc revolutionizes plant healthcare by combining artificial intelligence with agricultural expertise to provide instant, accurate plant disease diagnosis right at your fingertips.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <div class="feature-card bg-green-50 p-6 rounded-xl shadow-md border-l-4 border-green-500">
+              <div class="text-green-500 text-3xl mb-4">
+                <i class="fas fa-bolt"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Lightning Fast</h3>
+              <p class="text-gray-600">Get results in seconds with our advanced AI-powered image recognition technology.</p>
+            </div>
+
+            <div class="feature-card bg-green-50 p-6 rounded-xl shadow-md border-l-4 border-green-500">
+              <div class="text-green-500 text-3xl mb-4">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-2">95% Accuracy</h3>
+
+      <!-- Enhanced About Section -->
+      <div class="bg-white rounded-2xl shadow-lg p-8 mb-8" id="about">
+        <h2 class="text-3xl font-bold mb-6 text-green-500">About PlantDoc</h2>
+        <div class="space-y-6">
+          <p class="text-gray-700 text-lg">
+            PlantDoc revolutionizes plant healthcare by combining artificial intelligence with agricultural expertise to provide instant, accurate plant disease diagnosis right at your fingertips.
+          </p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <div class="feature-card bg-green-50 p-6 rounded-xl shadow-md border-l-4 border-green-500">
+              <div class="text-green-500 text-3xl mb-4">
+                <i class="fas fa-bolt"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Lightning Fast</h3>
+              <p class="text-gray-600">Get results in seconds with our advanced AI-powered image recognition technology.</p>
+            </div>
+            
+            <div class="feature-card bg-green-50 p-6 rounded-xl shadow-md border-l-4 border-green-500">
+              <div class="text-green-500 text-3xl mb-4">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-2">95% Accuracy</h3>
+              <p class="text-gray-600">Our system is trained on thousands of plant images for reliable diagnosis.</p>
+            </div>
+            
+            <div class="feature-card bg-green-50 p-6 rounded-xl shadow-md border-l-4 border-green-500">
+              <div class="text-green-500 text-3xl mb-4">
+                <i class="fas fa-lightbulb"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Smart Solutions</h3>
+              <p class="text-gray-600">Receive personalized treatment plans and prevention tips for healthy plants.</p>
+            </div>
+          </div>
+          
+          <div class="mt-8 bg-blue-50 p-6 rounded-xl border-l-4 border-blue-500">
+            <h3 class="text-xl font-bold mb-3 text-blue-700">Our Mission</h3>
+            <p class="text-gray-700">
+              We're committed to democratizing plant healthcare, making professional-grade disease diagnosis accessible to everyone from home gardeners to commercial farmers worldwide.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enhanced Crop Recommendations Carousel -->
+      <div class="bg-white rounded-2xl shadow-lg p-8" id="crops">
+        <h2 class="text-3xl font-bold mb-6 text-green-500">Seasonal Crop Guide</h2>
+        <p class="text-gray-600 mb-6 text-lg">
+          Discover the perfect crops to plant each month based on your region's climate and conditions.
+        </p>
+        <div class="relative overflow-hidden">
+          <div class="carousel flex" id="carousel">
+            <!-- Slide 1 (Jan-Apr) -->
+            <div class="carousel-slide p-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="region-card bg-green-50 p-6 rounded-xl shadow-md">
+                  <h3 class="text-xl font-bold text-green-700 mb-4">🌨️ January</h3>
+                  <p class="font-medium mb-2">🏔️ Mountain: Peas, Spinach, Garlic</p>
+                  <p class="font-medium mb-2">🌾 Plain: Wheat, Mustard, Chickpea</p>
+                  <p class="font-medium mb-2">🏖️ Coastal: Paddy, Coconut, Okra</p>
+                  <p class="font-medium">🏜️ Deserted: Wheat, Barley, Mustard</p>
+                </div>
+                <div class="region-card bg-green-50 p-6 rounded-xl shadow-md">
+                  <h3 class="text-xl font-bold text-green-700 mb-4">💝 February</h3>
+                  <p class="font-medium mb-2">🏔️ Mountain: Broccoli, Kale, Onion</p>
+                  <p class="font-medium mb-2">🌾 Plain: Barley, Lentil, Fenugreek</p>
+                  <p class="font-medium mb-2">🏖️ Coastal: Sugarcane, Brinjal, Chilli</p>
+                  <p class="font-medium">🏜️ Deserted: Chickpea, Lentil, Fenugreek</p>
+                </div>
+                <div class="region-card bg-green-50 p-6 rounded-xl shadow-md">
+                  <h3 class="text-xl font-bold text-green-700 mb-4">🌸 March</h3>
+                  <p class="font-medium mb-2">🏔️ Mountain: Potato, Carrot, Lettuce</p>
+                  <p class="font-medium mb-2">🌾 Plain: Maize, Sunflower, Pumpkin</p>
+                  <p class="font-medium mb-2">🏖️ Coastal: Groundnut, Papaya, Banana</p>
+                  <p class="font-medium">🏜️ Deserted: Pearl Millet, Cluster Bean, Cumin</p>
+                </div>
+                <div class="region-card bg-green-50 p-6 rounded-xl shadow-md">
+                  <h3 class="text-xl font-bold text-green-700 mb-4">🌧️ April</h3>
+                  <p class="font-medium mb-2">🏔️ Mountain: Cabbage, Cauliflower, Beans</p>
+                  <p class="font-medium mb-2">🌾 Plain: Sugarcane, Cotton, Groundnut</p>
+                  <p class="font-medium mb-2">🏖️ Coastal: Watermelon, Musk Melon, Brinjal</p>
+                  <p class="font-medium">🏜️ Deserted: Moong, Watermelon, Muskmelon</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Slide 2 (May-Aug) -->
+            <div class="carousel-slide p-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="region-card bg-green-50 p-6 rounded-xl shadow-md">
+                  <h3 class="text-xl font-bold text-green-700 mb-4">🌞 May</h3>
+                  <p class="font-medium mb-2">🏔️ Mountain: Maize, Tomato, Cucumber</p>
+                  <p class="font-medium mb-2">🌾 Plain: Paddy, Soybean, Maize</p>
+                  <p class="font-medium mb-2">🏖️ Coastal: Paddy, Okra, Chillies</p>
+                  <p class="font-medium">🏜️ Deserted: Sesame, Cluster Bean, Bajra</p>
+                </div>
+                <div class="region-card bg-green-50 p-6 rounded-xl shadow-md">
+                  <h3 class="text-xl font-bold text-green-700 mb-4">🌻 June</h3>
+                  <p class="font-medium mb-2">🏔️ Mountain: Pumpkin, Squash, Celery</p>
+                  <p class="font-medium mb-2">🌾 Plain: Paddy, Sorghum, Pearl Millet</p>
+                  <p class="font-medium mb-2">🏖️ Coastal: Maize, Sugarcane, Green Gram</p>
+                  <p class="font-medium">🏜️ Deserted: Millets, Moth Bean, Sorghum</p>
+                </div>
+                <div class="region-card bg-green-50 p-6 rounded-xl shadow-md">
+                  <h3 class="text-xl font-bold text-green-700 mb-4">⛱️ July</h3>
+                  <p class="font-medium mb-2">🏔️ Mountain: Radish, Beetroot, Capsicum</p>
+                  <p class="font-medium mb-2">🌾 Plain: Corn, Green Gram, Black Gram</p>
+                  <p class="font-medium mb-2">🏖️ Coastal: Paddy, Jute, Cotton</p>
+                  <p class="font-medium">🏜️ Deserted: Castor, Cowpea, Guar</p>
+                </div>
+                <div class="region-card bg-green-50 p-6 rounded-xl shadow-md">
+                  <h3 class="text-xl font-bold text-green-700 mb-4">🌊 August</h3>
+                  <p class="font-medium mb-2">🏔️ Mountain: Turnip, Spinach, Peas</p>
+                  <p class="font-medium mb-2">🌾 Plain: Soybean, Cotton, Groundnut</p>
+                  <p class="font-medium mb-2">🏖️ Coastal: Banana, Coconut, Tapioca</p>
+                  <p class="font-medium">🏜️ Deserted: Pearl Millet, Green Gram, Sesame</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Slide 3 (Sep-Dec) -->
+            <div class="carousel-slide p-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="region-card bg-green-50 p-6 rounded-xl shadow-md">
+                  <h3 class="text-xl font-bold text-green-700 mb-4">🍂 September</h3>
+                  <p class="font-medium mb-2">🏔️ Mountain: Barley, Mustard, Garlic</p>
+                  <p class="font-medium mb-2">🌾 Plain: Maize, Pigeon Pea, Sesame</p>
+                  <p class="font-medium mb-2">🏖️ Coastal: Yam, Sweet Potato, Chillies</p>
+                  <p class="font-medium">🏜️ Deserted: Chickpea, Mustard, Turnip</p>
+                </div>
+                <div class="region-card bg-green-50 p-6 rounded-xl shadow-md">
+                  <h3 class="text-xl font-bold text-green-700 mb-4">🎃 October</h3>
+                  <p class="font-medium mb-2">🏔️ Mountain: Wheat, Carrot, Onion</p>
+                  <p class="font-medium mb-2">🌾 Plain: Wheat, Mustard, Barley</p>
+                  <p class="font-medium mb-2">🏖️ Coastal: Brinjal, Tomato, Cabbage</p>
+                  <p class="font-medium">🏜️ Deserted: Barley, Wheat, Fenugreek</p>
+                </div>
+                <div class="region-card bg-green-50 p-6 rounded-xl shadow-md">
+                  <h3 class="text-xl font-bold text-green-700 mb-4">🍁 November</h3>
+                  <p class="font-medium mb-2">🏔️ Mountain: Spinach, Broccoli, Peas</p>
+                  <p class="font-medium mb-2">🌾 Plain: Garlic, Onion, Spinach</p>
+                  <p class="font-medium mb-2">🏖️ Coastal: Okra, Papaya, Peas</p>
+                  <p class="font-medium">🏜️ Deserted: Carrot, Radish, Turnip</p>
+                </div>
+                <div class="region-card bg-green-50 p-6 rounded-xl shadow-md">
+                  <h3 class="text-xl font-bold text-green-700 mb-4">🎄 December</h3>
+                  <p class="font-medium mb-2">🏔️ Mountain: Cabbage, Lettuce, Turnip</p>
+                  <p class="font-medium mb-2">🌾 Plain: Chickpea, Pea, Carrot</p>
+                  <p class="font-medium mb-2">🏖️ Coastal: Paddy, Spinach, Onion</p>
+                  <p class="font-medium">🏜️ Deserted: Wheat, Garlic, Onion</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-center mt-6">
+            <span class="carousel-dot active" data-index="0"></span>
+            <span class="carousel-dot" data-index="1"></span>
+            <span class="carousel-dot" data-index="2"></span>
+          </div>
+          <button id="prev-btn" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-green-100">
+            <i class="fas fa-chevron-left text-green-600"></i>
+          </button>
+          <button id="next-btn" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-green-100">
+            <i class="fas fa-chevron-right text-green-600"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column - Upload Section -->
+    <div class="bg-white rounded-2xl shadow-lg p-8 h-fit sticky top-28">
+      <h2 class="text-3xl font-bold mb-6 text-center text-green-500">Plant Health Scanner</h2>
+      
+      <div class="upload-container flex flex-col items-center gap-8 p-8 border-2 border-dashed border-gray-300 rounded-xl mb-8 hover:border-green-500 hover:bg-green-50" id="upload-area">
+        <i class="fas fa-cloud-upload-alt text-5xl text-green-500"></i>
+        <p class="text-xl text-gray-600 text-center">Snap or upload a clear photo of your plant's leaves</p>
+        <form id="upload-file" class="flex flex-col items-center gap-4">
+          <input type="file" name="file" id="file-input" class="hidden" accept="image/*">
+          <button type="button" id="upload-btn" class="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 flex items-center gap-2 transition hover:scale-105">
+            <i class="fas fa-folder-open"></i> Browse Gallery
+          </button>
+          <button type="button" id="camera-btn" class="mt-5 bg-purple-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-600 flex items-center gap-2 transition hover:scale-105">
+            <i class="fas fa-camera"></i> Instant Scan
+          </button>
+        </form>
+      </div>
+
+      <!-- Modal for Camera Preview -->
+      <div id="camera-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-6 rounded-2xl shadow-xl relative w-full max-w-2xl">
+          <button id="modal-close" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
+            <i class="fas fa-times fa-lg"></i>
+          </button>
+          <h3 class="text-xl font-bold mb-4 text-center text-green-600">Live Plant Scan</h3>
+          <video id="video-stream" class="w-full max-w-lg rounded-xl mb-4 mx-auto" autoplay playsinline></video>
+          <div class="flex justify-center gap-4">
+            <button id="btn-capture" class="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 flex items-center gap-2 transition hover:scale-105">
+              <i class="fas fa-camera"></i> Capture Diagnosis
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview & Analyze -->
+      <div class="preview-container hidden flex-col items-center mt-8" id="preview-area">
+        <canvas id="capture-canvas" class="hidden"></canvas>
+        <img id="image-preview" src="#" alt="Preview" class="w-full max-w-lg max-h-96 rounded-xl shadow-lg mb-6">
+        <button id="btn-predict" class="bg-green-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-600 flex items-center gap-2 transition hover:scale-105">
+          <i class="fas fa-search"></i> Diagnose Now
+        </button>
+      </div>
+
+      <!-- Results -->
+      <div class="result-container hidden mt-12 p-8 bg-gray-50 rounded-xl" id="result-area">
+        <button class="bg-green-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-600 mt-8 transition hover:scale-105 w-full" id="analyze-another">
+          <i class="fas fa-redo"></i> Scan Another Plant
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12 mt-12">
+    <div class="max-w-6xl mx-auto flex flex-col items-center gap-8 px-5% text-center">
+      <div class="flex items-center gap-2 text-2xl font-bold">
+        <i class="fas fa-leaf"></i>
+        <span>PlantDoc</span>
+      </div>
+      
+      <div class="flex gap-8 flex-wrap justify-center">
+        <a href="#home" class="hover:text-green-400 transition">Home</a>
+        <a href="#about" class="hover:text-green-400 transition">About</a>
+        <a href="#crops" class="hover:text-green-400 transition">Crop Guide</a>
+        <button id="footer-logout-btn" class="hover:text-green-400 transition font-medium">Logout</button>
+        <a href="#" class="hover:text-green-400 transition">Privacy Policy</a>
+      </div>
+      
+      <div class="flex gap-6 text-2xl">
+        <a href="#" class="hover:text-green-400 transition hover:-translate-y-1"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="hover:text-green-400 transition hover:-translate-y-1"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="hover:text-green-400 transition hover:-translate-y-1"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="hover:text-green-400 transition hover:-translate-y-1"><i class="fab fa-linkedin"></i></a>
+      </div>
+      
+      <p class="text-gray-400 text-sm">
+        &copy; 2025 PlantDoc. Developed by Team Rubix Cube. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Logout functionality
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    document.getElementById('footer-logout-btn').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    const fileInput = document.getElementById('file-input');
+    const uploadBtn = document.getElementById('upload-btn');
+    const cameraBtn = document.getElementById('camera-btn');
+    const modal = document.getElementById('camera-modal');
+    const modalClose = document.getElementById('modal-close');
+    const videoStream = document.getElementById('video-stream');
+    const btnCapture = document.getElementById('btn-capture');
+    const previewArea = document.getElementById('preview-area');
+    const imagePreview = document.getElementById('image-preview');
+    const captureCanvas = document.getElementById('capture-canvas');
+    const btnPredict = document.getElementById('btn-predict');
+    const resultArea = document.getElementById('result-area');
+
+    // File upload
+    uploadBtn.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => showPreview(ev.target.result);
+      reader.readAsDataURL(file);
+    });
+
+    // Camera capture modal open
+    cameraBtn.addEventListener('click', async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        videoStream.srcObject = stream;
+        modal.classList.remove('hidden');
+      } catch (err) {
+        alert('Could not access camera: ' + err.message);
+      }
+    });
+
+    // Close modal
+    modalClose.addEventListener('click', () => {
+      stopStream();
+      modal.classList.add('hidden');
+    });
+
+    // Capture image from video
+    btnCapture.addEventListener('click', () => {
+      const context = captureCanvas.getContext('2d');
+      captureCanvas.width = videoStream.videoWidth;
+      captureCanvas.height = videoStream.videoHeight;
+      context.drawImage(videoStream, 0, 0);
+      const dataURL = captureCanvas.toDataURL('image/png');
+      stopStream();
+      modal.classList.add('hidden');
+      showPreview(dataURL);
+    });
+
+    function stopStream() {
+      const tracks = videoStream.srcObject?.getTracks() || [];
+      tracks.forEach(track => track.stop());
+      videoStream.srcObject = null;
+    }
+
+    function showPreview(src) {
+      imagePreview.src = src;
+      previewArea.classList.remove('hidden');
+      resultArea.classList.add('hidden');
+    }
+
+    // Analyze plant click
+    btnPredict.addEventListener('click', () => {
+      console.log('Analyze:', imagePreview.src);
+    });
+
+    // Carousel functionality
+    const carousel = document.getElementById('carousel');
+    const dots = document.querySelectorAll('.carousel-dot');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    let currentIndex = 0;
+
+    function updateCarousel() {
+      carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        currentIndex = parseInt(dot.dataset.index);
+        updateCarousel();
+      });
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + dots.length) % dots.length;
+      updateCarousel();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % dots.length;
+      updateCarousel();
+    });
+
+    // Auto-rotate carousel
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % dots.length;
+      updateCarousel();
+    }, 8000);
+  </script>
+</body>
+</html>

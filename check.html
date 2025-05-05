@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Plant Health Tracker</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f9f0;
+        }
+        h1 {
+            color: #3a5a40;
+            text-align: center;
+        }
+        .header-info {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #e8f4ea;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+        th, td {
+            border: 1px solid #d4d4d4;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #588157;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f7f2;
+        }
+        .checklist {
+            display: flex;
+            align-items: center;
+        }
+        .checklist input {
+            margin-right: 10px;
+        }
+        .btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #3a5a40;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: #2d4532;
+        }
+        .notes {
+            width: 100%;
+            height: 60px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .water-amount, .sunlight-hours {
+            width: 60px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weekly Plant Health Tracker</h1>
+    
+    <div class="header-info">
+        <div class="date-info">
+            <h3 id="current-date">Date: Loading...</h3>
+        </div>
+    </div>
+    
+    <table id="plant-table">
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Date</th>
+                <th>Watered</th>
+                <th>Amount (ml)</th>
+                <th>Fertilized</th>
+                <th>Sunlight (hours)</th>
+                <th>Plant Condition</th>
+                <th>Observations</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Days will be populated by JavaScript -->
+        </tbody>
+    </table>
+    
+    <div>
+        <label for="plant-type">Plant Type:</label>
+        <input type="text" id="plant-type" placeholder="e.g., Monstera, Rose, Tomato">
+    </div>
+    
+    <div>
+        <label for="plant-notes">Weekly Notes:</label>
+        <textarea id="plant-notes" class="notes" placeholder="Record any special care, changes, or observations..."></textarea>
+    </div>
+    
+    <button id="download-pdf" class="btn">Download as PDF</button>
+    
+    <script>
+        // Initialize jsPDF
+        const { jsPDF } = window.jspdf;
+        
+        // Get current date and set up week
+        const today = new Date();
+        const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        
+        // Display current date
+        document.getElementById('current-date').textContent = `Date: ${daysOfWeek[today.getDay()]}, ${months[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
+        
+        // Generate the weekly table starting from today
+        function generateWeekTable() {
+            const tbody = document.querySelector('#plant-table tbody');
+            tbody.innerHTML = '';
+            
+            // Create rows for today + next 6 days
+            for (let i = 0; i < 7; i++) {
+                const dayDate = new Date(today);
+                dayDate.setDate(today.getDate() + i);
+                
+                const dayName = daysOfWeek[dayDate.getDay()];
+                const dateStr = `${months[dayDate.getMonth()]} ${dayDate.getDate()}, ${dayDate.getFullYear()}`;
+                
+                const row = document.createElement('tr');
+                
+                // Day name
+                const dayCell = document.createElement('td');
+                dayCell.textContent = dayName;
+                row.appendChild(dayCell);
+                
+                // Date
+                const dateCell = document.createElement('td');
+                dateCell.textContent = dateStr;
+                row.appendChild(dateCell);
+                
+                // Watered
+                const wateredCell = document.createElement('td');
+                const wateredCheckbox = document.createElement('input');
+                wateredCheckbox.type = 'checkbox';
+                wateredCheckbox.className = 'watered-check';
+                wateredCell.appendChild(wateredCheckbox);
+                wateredCell.appendChild(document.createTextNode(' Yes'));
+                row.appendChild(wateredCell);
+                
+                // Water amount
+                const amountCell = document.createElement('td');
+                const amountInput = document.createElement('input');
+                amountInput.type = 'number';
+                amountInput.className = 'water-amount';
+                amountInput.min = '0';
+                amountInput.max = '2000';
+                amountInput.value = '500';
+                amountCell.appendChild(amountInput);
+                row.appendChild(amountCell);
+                
+                // Fertilized
+                const fertCell = document.createElement('td');
+                const fertCheckbox = document.createElement('input');
+                fertCheckbox.type = 'checkbox';
+                fertCheckbox.className = 'fertilizer-check';
+                fertCell.appendChild(fertCheckbox);
+                fertCell.appendChild(document.createTextNode(' Yes'));
+                row.appendChild(fertCell);
+                
+                // Sunlight hours
+                const sunCell = document.createElement('td');
+                const sunInput = document.createElement('input');
+                sunInput.type = 'number';
+                sunInput.className = 'sunlight-hours';
+                sunInput.min = '0';
+                sunInput.max = '24';
+                sunInput.step = '0.5';
+                sunInput.value = '6';
+                sunCell.appendChild(sunInput);
+                row.appendChild(sunCell);
+                
+                // Plant condition
+                const conditionCell = document.createElement('td');
+                const conditionSelect = document.createElement('select');
+                conditionSelect.innerHTML = `
+                    <option value="Thriving">Thriving</option>
+                    <option value="Healthy" selected>Healthy</option>
+                    <option value="Struggling">Struggling</option>
+                    <option value="Unhealthy">Unhealthy</option>
+                    <option value="Critical">Critical</option>
+                `;
+                conditionCell.appendChild(conditionSelect);
+                row.appendChild(conditionCell);
+                
+                // Observations
+                const obsCell = document.createElement('td');
+                const obsInput = document.createElement('input');
+                obsInput.type = 'text';
+                obsInput.className = 'observations-input';
+                obsInput.placeholder = 'Notes...';
+                obsCell.appendChild(obsInput);
+                row.appendChild(obsCell);
+                
+                tbody.appendChild(row);
+            }
+        }
+        
+        // Generate PDF
+        document.getElementById('download-pdf').addEventListener('click', function() {
+            const doc = new jsPDF();
+            
+            // Title
+            doc.setFontSize(20);
+            doc.setTextColor(58, 90, 64);
+            doc.text('Weekly Plant Health Tracker', 105, 15, { align: 'center' });
+            
+            // Plant type
+            const plantType = document.getElementById('plant-type').value || 'Unspecified Plant';
+            doc.setFontSize(14);
+            doc.text(`Plant: ${plantType}`, 14, 25);
+            
+            // Date info
+            doc.setFontSize(12);
+            const dateText = document.getElementById('current-date').textContent;
+            doc.text(dateText, 14, 35);
+            
+            // Table data
+            const tableData = [];
+            const headers = [
+                'Day', 
+                'Date', 
+                'Watered', 
+                'Amount (ml)', 
+                'Fertilized',
+                'Sunlight (hrs)',
+                'Condition',
+                'Observations'
+            ];
+            
+            const rows = document.querySelectorAll('#plant-table tbody tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const rowData = [
+                    cells[0].textContent,
+                    cells[1].textContent,
+                    cells[2].querySelector('input').checked ? 'Yes' : 'No',
+                    cells[3].querySelector('input').value + ' ml',
+                    cells[4].querySelector('input').checked ? 'Yes' : 'No',
+                    cells[5].querySelector('input').value + ' hrs',
+                    cells[6].querySelector('select').value,
+                    cells[7].querySelector('input').value || 'None'
+                ];
+                tableData.push(rowData);
+            });
+            
+            // Add table to PDF
+            doc.autoTable({
+                head: [headers],
+                body: tableData,
+                startY: 45,
+                styles: {
+                    fontSize: 9,
+                    cellPadding: 3,
+                    overflow: 'linebreak',
+                    textColor: [0, 0, 0]
+                },
+                headStyles: {
+                    fillColor: [88, 129, 87],
+                    textColor: [255, 255, 255]
+                },
+                columnStyles: {
+                    0: { cellWidth: 15 },
+                    1: { cellWidth: 25 },
+                    2: { cellWidth: 15 },
+                    3: { cellWidth: 15 },
+                    4: { cellWidth: 15 },
+                    5: { cellWidth: 15 },
+                    6: { cellWidth: 20 },
+                    7: { cellWidth: 'auto' }
+                }
+            });
+            
+            // Add notes
+            const notes = document.getElementById('plant-notes').value;
+            if (notes) {
+                doc.setFontSize(12);
+                doc.text('Weekly Notes:', 14, doc.lastAutoTable.finalY + 15);
+                doc.setFontSize(10);
+                doc.text(notes, 14, doc.lastAutoTable.finalY + 25, { maxWidth: 180 });
+            }
+            
+            // Save PDF
+            const fileName = `Plant_Tracker_${plantType.replace(/ /g,'_')}_${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}.pdf`;
+            doc.save(fileName);
+        });
+        
+        // Initialize the table when page loads
+        window.onload = generateWeekTable;
+    </script>
+</body>
+</html>
