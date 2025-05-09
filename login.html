@@ -6,6 +6,7 @@
   <title>PlantDoc | Disease Detection</title>
   <link rel="icon" href="logonew.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <script type="module" src="script.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="styles.css" rel="stylesheet"/>
   <style>
@@ -43,50 +44,39 @@
     }
   </style>
 </head>
-<body>
-  <!--   HEADER -->
-  <header class="bg-white shadow-md fixed w-full top-0 z-50">
-    <nav class="max-w-7xl mx-auto px-[5%] py-4 flex justify-between items-center">
-      <!-- Logo -->
-      <div class="flex items-center gap-2 text-2xl font-bold text-green-500">
-        <i class="fas fa-leaf text-2xl"></i>
-        <span>PlantDoc</span>
-      </div>
-
-      <!-- Hamburger Icon (Mobile) -->
-      <button id="menu-toggle" class="text-gray-800 text-2xl md:hidden">
-        <i class="fas fa-bars"></i>
-      </button>
-
-      <!-- Nav Links (Desktop & Mobile) -->
-      <div id="nav-links" class="hidden md:flex items-center gap-6">
-        <a href="#home" class="text-gray-800 font-medium hover:text-green-500">Home</a>
-        <a href="#about" class="text-gray-800 font-medium hover:text-green-500">About</a>
-        <a href="#crops" class="text-gray-800 font-medium hover:text-green-500">Crop Guide</a>
-        <a href="check.html" class="text-gray-800 font-medium hover:text-green-500">Health Tracker</a>
-        <button id="logout-btn" class="text-gray-800 font-medium hover:text-red-500">Logout</button>
-      </div>
-    </nav>
-
-    <!-- Mobile Menu (Hidden by default) -->
-    <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg rounded-md absolute right-4 top-16 z-40 w-48">
-      <a href="#home" class="block text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">Home</a>
-      <a href="#about" class="block text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">About</a>
-      <a href="#crops" class="block text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">Crop Guide</a>
-      <a href="check.html" class="block text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">Health Tracker</a>
-      <button id="logout-btn-mobile" class="block text-gray-800 font-medium hover:text-red-500 px-4 py-3 hover:bg-gray-50 w-full text-left">Logout</button>
+<!--   HEADER -->
+<header class="bg-white shadow-md fixed w-full top-0 z-50">
+  <nav class="max-w-7xl mx-auto px-[5%] py-4 flex justify-between items-center">
+    <!-- Logo -->
+    <div class="flex items-center gap-2 text-2xl font-bold text-green-500">
+      <i class="fas fa-leaf text-2xl"></i>
+      <span>PlantDoc</span>
     </div>
-  </header>
 
-  <script>
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
+    <!-- Hamburger Icon (Mobile) -->
+    <button id="menu-toggle" class="text-gray-800 text-2xl md:hidden">
+      <i class="fas fa-bars"></i>
+    </button>
 
-  menuToggle.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-  });
-</script>
+    <!-- Nav Links (Desktop & Mobile) -->
+    <div id="nav-links" class="hidden md:flex items-center gap-6">
+      <a href="#home" class="text-gray-800 font-medium hover:text-green-500">Home</a>
+      <a href="#about" class="text-gray-800 font-medium hover:text-green-500">About</a>
+      <a href="#crops" class="text-gray-800 font-medium hover:text-green-500">Crop Guide</a>
+      <a href="check.html" class="text-gray-800 font-medium hover:text-green-500">Health Tracker</a>
+      <button id="logout-btn" class="text-gray-800 font-medium hover:text-red-500">Logout</button>
+    </div>
+  </nav>
 
+  <!-- Mobile Menu (Hidden by default) -->
+  <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg rounded-md absolute right-4 top-16 z-40 w-48">
+    <a href="#home" class="block text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">Home</a>
+    <a href="#about" class="block text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">About</a>
+    <a href="#crops" class="block text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">Crop Guide</a>
+    <a href="check.html" class="block text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">Health Tracker</a>
+    <button id="logout-btn-mobile" class="block text-gray-800 font-medium hover:text-red-500 px-4 py-3 hover:bg-gray-50 w-full text-left">Logout</button>
+  </div>
+</header>
   <!-- Main Grid Layout -->
   <main class="pt-24 px-[5%] max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
     <!-- Left Column - Home Content -->
@@ -289,7 +279,7 @@
       </div>
 
       <!-- Modal for Camera Preview -->
-      <div id="camera-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div id="camera-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
         <div class="bg-white p-6 rounded-2xl shadow-xl relative w-full max-w-2xl">
           <button id="modal-close" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
             <i class="fas fa-times fa-lg"></i>
@@ -306,6 +296,7 @@
           </div>
         </div>
       </div>
+
 
       <!-- Preview & Analyze -->
       <div class="preview-container hidden flex-col items-center mt-8" id="preview-area">
@@ -353,163 +344,5 @@
       </p>
     </div>
   </footer>
-
-  <script>
-    // Logout functionality
-    document.getElementById('logout-btn').addEventListener('click', () => {
-      window.location.href = 'index.html';
-    });
-
-    document.getElementById('footer-logout-btn').addEventListener('click', () => {
-      window.location.href = 'index.html';
-    });
-
-    const fileInput = document.getElementById('file-input');
-    const uploadBtn = document.getElementById('upload-btn');
-    const cameraBtn = document.getElementById('camera-btn');
-    const modal = document.getElementById('camera-modal');
-    const modalClose = document.getElementById('modal-close');
-    const videoStream = document.getElementById('video-stream');
-    const btnCapture = document.getElementById('btn-capture');
-    const btnSwitchCamera = document.getElementById('btn-switch-camera');
-    const previewArea = document.getElementById('preview-area');
-    const imagePreview = document.getElementById('image-preview');
-    const captureCanvas = document.getElementById('capture-canvas');
-    const btnPredict = document.getElementById('btn-predict');
-    const resultArea = document.getElementById('result-area');
-
-    // File upload
-    uploadBtn.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (ev) => showPreview(ev.target.result);
-      reader.readAsDataURL(file);
-    });
-
-    // Camera variables
-    let currentStream = null;
-    let facingMode = "environment"; // Default to rear camera
-
-    // Function to stop the current video stream
-    function stopStream() {
-      if (currentStream) {
-        currentStream.getTracks().forEach(track => track.stop());
-        currentStream = null;
-      }
-    }
-
-    // Function to start the video stream
-    async function startStream() {
-      stopStream(); // Stop any existing stream
-      
-      try {
-        const constraints = {
-          video: {
-            facingMode: facingMode,
-            width: { ideal: 1280 },
-            height: { ideal: 720 }
-          },
-          audio: false
-        };
-        
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-        videoStream.srcObject = stream;
-        currentStream = stream;
-        modal.classList.remove('hidden');
-      } catch (err) {
-        console.error("Error accessing camera:", err);
-        alert('Could not access camera: ' + err.message);
-      }
-    }
-
-    // Camera capture modal open
-    cameraBtn.addEventListener('click', async () => {
-      // Start with rear camera by default
-      facingMode = "environment";
-      await startStream();
-    });
-
-    // Switch camera button
-    btnSwitchCamera.addEventListener('click', async () => {
-      facingMode = facingMode === "user" ? "environment" : "user";
-      await startStream();
-    });
-
-    // Close modal
-    modalClose.addEventListener('click', () => {
-      stopStream();
-      modal.classList.add('hidden');
-    });
-
-    // Capture image from video
-    btnCapture.addEventListener('click', () => {
-      const context = captureCanvas.getContext('2d');
-      captureCanvas.width = videoStream.videoWidth;
-      captureCanvas.height = videoStream.videoHeight;
-      context.drawImage(videoStream, 0, 0);
-      
-      // Flip the image horizontally if using front camera
-      if (facingMode === "user") {
-        context.translate(captureCanvas.width, 0);
-        context.scale(-1, 1);
-        context.drawImage(videoStream, 0, 0);
-      }
-      
-      const dataURL = captureCanvas.toDataURL('image/png');
-      stopStream();
-      modal.classList.add('hidden');
-      showPreview(dataURL);
-    });
-
-    function showPreview(src) {
-      imagePreview.src = src;
-      previewArea.classList.remove('hidden');
-      resultArea.classList.add('hidden');
-    }
-
-    // Analyze plant click
-    btnPredict.addEventListener('click', () => {
-      console.log('Analyze:', imagePreview.src);
-    });
-
-    // Carousel functionality
-    const carousel = document.getElementById('carousel');
-    const dots = document.querySelectorAll('.carousel-dot');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    let currentIndex = 0;
-
-    function updateCarousel() {
-      carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-      dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentIndex);
-      });
-    }
-
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        currentIndex = parseInt(dot.dataset.index);
-        updateCarousel();
-      });
-    });
-
-    prevBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + dots.length) % dots.length;
-      updateCarousel();
-    });
-
-    nextBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % dots.length;
-      updateCarousel();
-    });
-
-    // Auto-rotate carousel
-    setInterval(() => {
-      currentIndex = (currentIndex + 1) % dots.length;
-      updateCarousel();
-    }, 8000);
-  </script>
 </body>
 </html>
