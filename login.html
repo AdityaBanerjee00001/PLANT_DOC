@@ -58,27 +58,33 @@
     </button>
 
     <!-- Nav Links (Desktop & Mobile) -->
-    <div id="nav-links" class="hidden md:flex md:items-center md:gap-8 flex-col md:flex-row absolute md:static right-4 top-16 bg-white md:bg-transparent shadow-lg md:shadow-none rounded-md z-40 overflow-hidden">
-      <div class="flex flex-col w-48">
-        <a href="#home" class="text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">Home</a>
-        <a href="#about" class="text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">About</a>
-        <a href="#crops" class="text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">Crop Guide</a>
-        <a href="check.html" class="text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">Health Tracker</a>
-        <button id="logout-btn" class="text-gray-800 font-medium hover:text-red-500 px-4 py-3 hover:bg-gray-50 w-full text-left">Logout</button>
-      </div>
+    <div id="nav-links" class="hidden md:flex items-center gap-6">
+      <a href="#home" class="text-gray-800 font-medium hover:text-green-500">Home</a>
+      <a href="#about" class="text-gray-800 font-medium hover:text-green-500">About</a>
+      <a href="#crops" class="text-gray-800 font-medium hover:text-green-500">Crop Guide</a>
+      <a href="check.html" class="text-gray-800 font-medium hover:text-green-500">Health Tracker</a>
+      <button id="logout-btn" class="text-gray-800 font-medium hover:text-red-500">Logout</button>
     </div>
   </nav>
+
+  <!-- Mobile Menu (Hidden by default) -->
+  <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg rounded-md absolute right-4 top-16 z-40 w-48">
+    <a href="#home" class="block text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">Home</a>
+    <a href="#about" class="block text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">About</a>
+    <a href="#crops" class="block text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">Crop Guide</a>
+    <a href="check.html" class="block text-gray-800 font-medium hover:text-green-500 px-4 py-3 hover:bg-gray-50 w-full text-left border-b border-gray-100">Health Tracker</a>
+    <button id="logout-btn-mobile" class="block text-gray-800 font-medium hover:text-red-500 px-4 py-3 hover:bg-gray-50 w-full text-left">Logout</button>
+  </div>
 </header>
 
 <script>
   const menuToggle = document.getElementById('menu-toggle');
-  const navLinks = document.getElementById('nav-links');
+  const mobileMenu = document.getElementById('mobile-menu');
 
   menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('hidden');
+    mobileMenu.classList.toggle('hidden');
   });
 </script>
-
 
 
   <!-- Main Grid Layout -->
