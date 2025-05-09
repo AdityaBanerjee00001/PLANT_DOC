@@ -78,6 +78,15 @@
     </div>
   </header>
 
+  <script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuToggle.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+</script>
+
   <!-- Main Grid Layout -->
   <main class="pt-24 px-[5%] max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
     <!-- Left Column - Home Content -->
