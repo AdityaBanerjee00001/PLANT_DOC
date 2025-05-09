@@ -30,6 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = 'index.html';
   });
 
+   document.getElementById('logout-btn-mobile').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
   document.getElementById('footer-logout-btn').addEventListener('click', () => {
     window.location.href = 'index.html';
   });
