@@ -1,9 +1,8 @@
 // script.js
-// Load Firebase modules first
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-// Firebase configuration & initialization
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCGfJstbn9eObkHWtCbFE1NzYZA62JSxRg",
   authDomain: "plantdoc9635.firebaseapp.com",
@@ -12,33 +11,49 @@ const firebaseConfig = {
   messagingSenderId: "1080581409053",
   appId: "1:1080581409053:web:2394d2575ff075dcdf79f4"
 };
+
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Main DOM logic
+// Main application
 document.addEventListener('DOMContentLoaded', () => {
-  // Header and mobile menu functionality
+  // Initialize all functionality
+  initHeaderMenu();
+  initLogoutHandlers();
+  initImageDetection();
+  initNavigation();
+  initLoginForm();
+  initCarousel();
+});
+
+// Header and mobile menu functionality
+function initHeaderMenu() {
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
 
-  menuToggle.addEventListener('click', () => {
+  menuToggle?.addEventListener('click', () => {
     mobileMenu.classList.toggle('hidden');
   });
+}
 
-  // Logout functionality
-  document.getElementById('logout-btn').addEventListener('click', () => {
-    window.location.href = 'index.html';
-  });
+// Logout functionality
+function initLogoutHandlers() {
+  const logoutButtons = [
+    'logout-btn',
+    'logout-btn-mobile',
+    'footer-logout-btn'
+  ];
 
-   document.getElementById('logout-btn-mobile').addEventListener('click', () => {
+  logoutButtons.forEach(id => {
+    document.getElementById(id)?.addEventListener('click', () => {
       window.location.href = 'index.html';
     });
-
-  document.getElementById('footer-logout-btn').addEventListener('click', () => {
-    window.location.href = 'index.html';
   });
+}
 
-  // DOM Elements for detection
+// Image detection functionality
+function initImageDetection() {
   const fileInput = document.getElementById('file-input');
   const uploadBtn = document.getElementById('upload-btn');
   const cameraBtn = document.getElementById('camera-btn');
@@ -52,10 +67,22 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentImageData = null;
 
   // File upload
-  uploadBtn.addEventListener('click', () => fileInput.click());
-  fileInput.addEventListener('change', () => {
+  uploadBtn?.addEventListener('click', () => fileInput.click());
+  fileInput?.addEventListener('change', handleFileUpload);
+
+  // Camera capture
+  cameraBtn?.addEventListener('click', initCamera);
+
+  // Predict button
+  predictBtn?.addEventListener('click', predictImage);
+
+  // Reset button
+  analyzeAnotherBtn?.addEventListener('click', resetDetection);
+
+  function handleFileUpload() {
     const file = fileInput.files[0];
     if (!file) return;
+    
     const reader = new FileReader();
     reader.onload = e => {
       imagePreview.src = e.target.result;
@@ -65,16 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
       resultArea.classList.add('hidden');
     };
     reader.readAsDataURL(file);
-  });
+  }
 
-  // Camera capture
-  cameraBtn.addEventListener('click', async () => {
+  async function initCamera() {
     try {
-      // Updated constraints to prioritize rear camera
       const constraints = {
         video: {
-          facingMode: { exact: 'environment' }, // Force rear camera
-          width: { ideal: 1920 },              // Higher resolution
+          facingMode: { exact: 'environment' },
+          width: { ideal: 1920 },
           height: { ideal: 1080 }
         },
         audio: false
@@ -82,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const stream = await navigator.mediaDevices.getUserMedia(constraints)
         .catch(err => {
-          // Fallback to any camera if rear camera fails
           console.warn('Rear camera not available, falling back:', err);
           return navigator.mediaDevices.getUserMedia({ video: true });
         });
@@ -95,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const overlay = document.createElement('div');
       overlay.className = 'fixed inset-0 bg-black bg-opacity-75 flex flex-col items-center justify-center z-50';
       
-      // Add close button
       const closeBtn = document.createElement('button');
       closeBtn.innerHTML = '<i class="fas fa-times"></i>';
       closeBtn.className = 'absolute top-4 right-4 text-white text-2xl';
@@ -104,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.remove();
       };
       overlay.appendChild(closeBtn);
-      
       overlay.appendChild(video);
 
       const captureBtn = document.createElement('button');
@@ -120,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.height = video.videoHeight;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(video, 0, 0);
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.9); // 90% quality
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
         currentImageData = dataUrl;
         imagePreview.src = dataUrl;
         previewArea.classList.remove('hidden');
@@ -130,31 +152,17 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.remove();
       });
 
-      // Handle orientation changes
-      function handleOrientation() {
-        // Adjust for mobile device orientation
-        const orientation = window.orientation;
-        if (orientation === 90 || orientation === -90) {
-          video.style.transform = 'rotate(0deg)';
-        } else {
-          video.style.transform = 'rotate(0deg)';
-        }
-      }
-      
-      window.addEventListener('orientationchange', handleOrientation);
-      handleOrientation();
-
     } catch (err) {
       console.error('Camera error:', err);
       alert('Could not access camera. Please ensure camera permissions are granted.');
     }
-  });
+  }
 
-  // Predict
-  predictBtn.addEventListener('click', () => {
+  function predictImage() {
     if (!currentImageData && !fileInput.files.length) {
       return alert('Please select or capture an image first.');
     }
+    
     loader.classList.remove('hidden');
     previewArea.classList.add('hidden');
 
@@ -170,12 +178,14 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(data => {
         loader.classList.add('hidden');
         if (data.error) throw new Error(data.error);
+        
         document.getElementById('disease-class').textContent = data.class;
         document.getElementById('confidence-value').textContent = data.confidence + '%';
         document.getElementById('confidence-level').style.width = data.confidence + '%';
         document.getElementById('healthy-percent').textContent = data.all_predictions.Healthy + '%';
         document.getElementById('powdery-percent').textContent = data.all_predictions['Powdery Mildew'] + '%';
         document.getElementById('rust-percent').textContent = data.all_predictions.Rust + '%';
+        
         resultArea.classList.remove('hidden');
       })
       .catch(err => {
@@ -183,48 +193,89 @@ document.addEventListener('DOMContentLoaded', () => {
         previewArea.classList.remove('hidden');
         alert('Prediction error: ' + err.message);
       });
-  });
+  }
 
-  // Reset
-  analyzeAnotherBtn.addEventListener('click', () => {
+  function resetDetection() {
     fileInput.value = '';
     imagePreview.src = '#';
     currentImageData = null;
     uploadArea.classList.remove('hidden');
     previewArea.classList.add('hidden');
     resultArea.classList.add('hidden');
-  });
+  }
+}
 
-  // Smooth scroll
-  document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
-    e.preventDefault();
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
-  }));
-
-  // Login form (if present)
-  const loginForm = document.getElementById('login-form');
-  if (loginForm) {
-    loginForm.addEventListener('submit', async e => {
+// Navigation and smooth scrolling
+function initNavigation() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
       e.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      try {
-        const { user } = await signInWithEmailAndPassword(auth, email, password);
-        alert('Login successful! Welcome ' + user.email);
-        window.location.href = 'login.html';
-      } catch (err) {
-        alert('Login failed: ' + err.message);
+      
+      const targetId = this.getAttribute('href');
+      const target = document.querySelector(targetId);
+      
+      if (target) {
+        const header = document.querySelector('header');
+        const headerHeight = header ? header.offsetHeight : 80;
+        const targetPosition = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+        
+        // Update URL without page reload
+        if (history.pushState) {
+          history.pushState(null, null, targetId);
+        } else {
+          window.location.hash = targetId;
+        }
       }
     });
-  }
+  });
 
-  // Carousel functionality
+  // Handle initial page load with hash
+  if (window.location.hash) {
+    setTimeout(() => {
+      const target = document.querySelector(window.location.hash);
+      if (target) {
+        const header = document.querySelector('header');
+        const headerHeight = header ? header.offsetHeight : 80;
+        const targetPosition = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+        window.scrollTo({ top: targetPosition });
+      }
+    }, 100);
+  }
+}
+
+// Login form handling
+function initLoginForm() {
+  const loginForm = document.getElementById('login-form');
+  
+  loginForm?.addEventListener('submit', async e => {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    
+    try {
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+      alert('Login successful! Welcome ' + user.email);
+      window.location.href = 'login.html';
+    } catch (err) {
+      alert('Login failed: ' + err.message);
+    }
+  });
+}
+
+// Carousel functionality
+function initCarousel() {
   const carousel = document.getElementById('carousel');
   const dots = document.querySelectorAll('.carousel-dot');
   const prevBtn = document.getElementById('prev-btn');
   const nextBtn = document.getElementById('next-btn');
   let currentIndex = 0;
+
+  if (!carousel) return;
 
   function updateCarousel() {
     carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
@@ -240,12 +291,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  prevBtn.addEventListener('click', () => {
+  prevBtn?.addEventListener('click', () => {
     currentIndex = (currentIndex - 1 + dots.length) % dots.length;
     updateCarousel();
   });
 
-  nextBtn.addEventListener('click', () => {
+  nextBtn?.addEventListener('click', () => {
     currentIndex = (currentIndex + 1) % dots.length;
     updateCarousel();
   });
@@ -255,4 +306,4 @@ document.addEventListener('DOMContentLoaded', () => {
     currentIndex = (currentIndex + 1) % dots.length;
     updateCarousel();
   }, 8000);
-});
+}
