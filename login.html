@@ -299,13 +299,38 @@
 
 
       <!-- Preview & Analyze -->
-      <div class="preview-container hidden flex-col items-center mt-8" id="preview-area">
-        <canvas id="capture-canvas" class="hidden"></canvas>
-        <img id="image-preview" src="#" alt="Preview" class="w-full max-w-lg max-h-96 rounded-xl shadow-lg mb-6">
-        <button id="btn-predict" class="bg-green-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-600 flex items-center gap-2 transition hover:scale-105">
-          <i class="fas fa-search"></i> Diagnose Now
-        </button>
-      </div>
+     <div class="preview-container hidden flex-col items-center justify-center mt-8" id="preview-area">
+  <canvas id="capture-canvas" class="hidden"></canvas>
+  <img id="image-preview" src="#" alt="Preview" class="w-full max-w-lg max-h-96 rounded-xl shadow-lg mb-6">
+  <div class="flex justify-center w-full gap-4">
+    <button id="btn-predict" class="bg-green-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-600 flex items-center gap-2 transition hover:scale-105">
+      <i class="fas fa-search"></i> Diagnose Now
+    </button>
+    <button id="btn-resubmit" class="hidden bg-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 flex items-center gap-2 transition hover:scale-105">
+      <i class="fas fa-redo"></i> Re Upload
+    </button>
+</div>
+
+<script>
+  document.getElementById('btn-predict').addEventListener('click', function() {
+    // Your existing diagnose functionality here...
+
+    // Show the resubmit button after diagnosis is done
+    document.getElementById('btn-resubmit').classList.remove('hidden');
+  });
+
+  document.getElementById('btn-resubmit').addEventListener('click', function() {
+    // Ask for confirmation before refreshing
+    if (confirm('Are you sure you want to upload a new image and start over?')) {
+      window.location.reload();
+    }
+  });
+</script>
+
+</div>
+
+
+
 
       <!-- Results -->
       <div class="result-container hidden mt-12 p-8 bg-gray-50 rounded-xl" id="result-area">
@@ -313,6 +338,95 @@
           <i class="fas fa-redo"></i> Scan Another Plant
         </button>
       </div>
+      <!-- Diagnosis Result-->
+<div id="diagnosis-result" class="mt-4 text-center text-lg text-gray-700"></div>
+
+<script>
+  document.getElementById('btn-predict')?.addEventListener('click', async function () {
+      const previewImg = document.getElementById('image-preview');
+      const resultContainer = document.getElementById('diagnosis-result');
+
+      if (!previewImg || !previewImg.src || previewImg.src === "#") {
+          resultContainer.textContent = "Please capture or upload an image first.";
+          return;
+      }
+
+      const base64Image = previewImg.src.split(',')[1];
+      const payload = {
+          images: [base64Image],
+          health: "only"
+      };
+
+      resultContainer.textContent = "Analyzing... Please wait...";
+
+      try {
+          const response = await fetch('https://plant.id/api/v3/identification', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Api-Key': '8q3dcMEO3J7zmxJQXX27CGCZTot05VYe6tpso08jtDLVaewAcZ' // replace securely in production
+              },
+              body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+              const errorText = await response.text();
+              throw new Error(`API Error (${response.status}): ${errorText}`);
+          }
+
+          const data = await response.json();
+          console.log('Full API Response:', data); // Debugging
+
+          let html = "";
+
+          const crop = data?.result?.crop?.suggestions?.[0];
+          if (crop) {
+              html += `<p><strong>Crop Detected:</strong> ${crop.name} (<em>${crop.scientific_name}</em>)</p>`;
+          }
+
+          const diseaseSuggestions = data?.result?.disease?.suggestions;
+          if (diseaseSuggestions?.length) {
+              html += `<h3 class="mt-4 font-bold">Detected Disease(s):</h3><ul class="list-disc list-inside text-left mx-auto max-w-md">`;
+
+              diseaseSuggestions.forEach(disease => {
+                  if (disease.name.toLowerCase() !== "healthy") {
+                      html += `<li>
+                          <strong>${disease.name}</strong> (<em>${disease.scientific_name}</em>) - ${(disease.probability * 100).toFixed(1)}%<br/>
+                      `;
+
+                      if (disease.similar_images?.length) {
+                          html += `<div class="flex flex-wrap gap-2 mt-1">`;
+                          disease.similar_images.slice(0, 2).forEach(img => {
+                              html += `<a href="${img.url}" target="_blank"><img src="${img.url_small}" class="w-24 h-24 object-cover rounded shadow" /></a>`;
+                          });
+                          html += `</div>`;
+                      }
+
+                      if (disease.details?.eppo_regulation_status) {
+                          const eppoInfo = Object.entries(disease.details.eppo_regulation_status)
+                              .map(([country, status]) => `${country}: ${status}`)
+                              .join(", ");
+                          html += `<br/><em>EPPO Regulation:</em> ${eppoInfo}`;
+                      }
+
+                      html += `</li>`;
+                  }
+              });
+
+              html += `</ul>`;
+          } else {
+              html += `<p>No disease detected. The plant appears healthy ✅</p>`;
+          }
+
+          resultContainer.innerHTML = html;
+
+      } catch (error) {
+          console.error('Diagnosis Error:', error);
+          resultContainer.textContent = `An error occurred: ${error.message}`;
+      }
+  });
+</script>
+
     </div>
   </main>
 
