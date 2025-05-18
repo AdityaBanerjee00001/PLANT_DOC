@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -113,6 +113,237 @@
       </script>
       
 
+
+    <script src="script.js"></script>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | PlantDoc</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('image.avif');">
+    <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-2xl p-8 w-full max-w-md mx-4">
+        <div class="text-center mb-8">
+            <div class="flex items-center justify-center gap-2 text-3xl font-bold text-green-600 mb-2">
+                <i class="fas fa-leaf"></i>
+                <span>PlantDoc</span>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-800">Create Account</h1>
+            <p class="text-gray-600">Join our community</p>
+        </div>
+        
+        <form class="space-y-4">
+            <div>
+                <label for="fullname" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <input type="text" id="fullname" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="John Doe" required>
+            </div>
+            
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <input type="email" id="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="your@email.com" required>
+            </div>
+            
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <input type="password" id="password" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="••••••••" required>
+            </div>
+            
+            <div>
+                <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                <input type="password" id="confirm-password" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="••••••••" required>
+            </div>
+            
+            <div class="flex items-center">
+                <input id="terms" type="checkbox" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded" required>
+                <label for="terms" class="ml-2 block text-sm text-gray-700">I agree to the <a href="#" class="text-green-600 hover:text-green-500" id="termsLink">Terms of Service</a> and <a href="#" class="text-green-600 hover:text-green-500" id="policyLink">Privacy Policy</a></label>
+            </div>
+            
+            <button type="submit" class="w-full bg-green-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-green-700 transition focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 mt-4">
+                Create Account
+            </button>
+        </form>
+        
+        <div class="mt-6 text-center">
+            <p class="text-sm text-gray-600">Already have an account? 
+                <a href="index.html" class="text-green-600 font-medium hover:text-green-500">Sign in</a>
+            </p>
+        </div>
+        
+        <div class="mt-6 border-t border-gray-200 pt-6">
+            <p class="text-xs text-gray-500 text-center">By creating an account, you agree to our <a href="#" class="text-green-600 hover:text-green-500" id="termsLink2">Terms of Service</a> and acknowledge our <a href="#" class="text-green-600 hover:text-green-500" id="policyLink2">Privacy Policy</a>.</p>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="termsModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-green-600">Terms of Service</h3>
+                <button id="closeTerms" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="text-sm text-gray-700 space-y-4">
+                <p><strong>Last Updated:</strong> MAY-2025 </p>
+                
+                <h4 class="font-bold text-gray-800">1. Introduction</h4>
+                <p>Welcome to PlantDoc, developed by Aditya Banerjee. These Terms of Service govern your use of our plant disease identification application.</p>
+                
+                <h4 class="font-bold text-gray-800">2. User Responsibilities</h4>
+                <p>You agree to use PlantDoc only for lawful purposes. You are responsible for maintaining the confidentiality of your account information.</p>
+                
+                <h4 class="font-bold text-gray-800">3. Accuracy of Information</h4>
+                <p>While we strive for accuracy, PlantDoc provides disease identification suggestions only and should not replace professional diagnosis.</p>
+                
+                <h4 class="font-bold text-gray-800">4. Intellectual Property</h4>
+                <p>All content and technology related to PlantDoc are the property of the developers unless otherwise stated.</p>
+                
+                <h4 class="font-bold text-gray-800">5. Limitation of Liability</h4>
+                <p>The developers shall not be liable for any damages resulting from the use or inability to use PlantDoc.</p>
+                
+                <h4 class="font-bold text-gray-800">6. Changes to Terms</h4>
+                <p>We reserve the right to modify these terms at any time. Continued use constitutes acceptance of the modified terms.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="policyModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-green-600">Privacy Policy</h3>
+                <button id="closePolicy" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="text-sm text-gray-700 space-y-4">
+                <p><strong>Last Updated:</strong> MAY-2025</p>
+                
+                <h4 class="font-bold text-gray-800">1. Information Collection</h4>
+                <p>PlantDoc collects plant images you upload, account information, and usage data to provide and improve our services.</p>
+                
+                <h4 class="font-bold text-gray-800">2. Use of Information</h4>
+                <p>Your data is used to provide disease identification, improve our algorithms, and communicate with you about our services.</p>
+                
+                <h4 class="font-bold text-gray-800">3. Data Protection</h4>
+                <p>We implement security measures to protect your information, but no internet transmission is 100% secure.</p>
+                
+                <h4 class="font-bold text-gray-800">4. Third-Party Services</h4>
+                <p>We may use third-party services like Firebase for authentication and hosting. These services have their own privacy policies.</p>
+                
+                <h4 class="font-bold text-gray-800">5. Children's Privacy</h4>
+                <p>PlantDoc is not directed at children under 13. We do not knowingly collect personal information from children.</p>
+                
+                <h4 class="font-bold text-gray-800">6. Changes to Policy</h4>
+                <p>We may update this policy periodically. Continued use constitutes acceptance of the modified policy.</p>
+                
+                <h4 class="font-bold text-gray-800">7. Contact Us</h4>
+                <p>For questions about these policies, please contact the development team at rubixcubeteams4@gmail.com</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+      
+        // Firebase config
+        const firebaseConfig = {
+          apiKey: "AIzaSyCGfJstbn9eObkHWtCbFE1NzYZA62JSxRg",
+          authDomain: "plantdoc9635.firebaseapp.com",
+          projectId: "plantdoc9635",
+          storageBucket: "plantdoc9635.appspot.com",
+          messagingSenderId: "1080581409053",
+          appId: "1:1080581409053:web:2394d2575ff075dcdf79f4"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+      
+        // Handle form submission
+        const form = document.querySelector("form");
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+      
+          const fullname = document.getElementById("fullname").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value;
+          const confirmPassword = document.getElementById("confirm-password").value;
+      
+          if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+            return;
+          }
+      
+          try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+      
+            // Update user profile with full name
+            await updateProfile(user, {
+              displayName: fullname
+            });
+      
+            alert("Account created successfully!");
+            window.location.href = "login.html"; // Redirect to login or dashboard
+          } catch (error) {
+            alert("Signup failed: " + error.message);
+          }
+        });
+
+        // Modal handling
+        const termsModal = document.getElementById('termsModal');
+        const policyModal = document.getElementById('policyModal');
+        
+        // Get all terms and policy links
+        const termsLinks = document.querySelectorAll('[id^="termsLink"]');
+        const policyLinks = document.querySelectorAll('[id^="policyLink"]');
+        
+        // Add click event to all terms links
+        termsLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                termsModal.classList.remove('hidden');
+            });
+        });
+        
+        // Add click event to all policy links
+        policyLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                policyModal.classList.remove('hidden');
+            });
+        });
+        
+        // Close buttons
+        document.getElementById('closeTerms').addEventListener('click', () => {
+            termsModal.classList.add('hidden');
+        });
+        
+        document.getElementById('closePolicy').addEventListener('click', () => {
+            policyModal.classList.add('hidden');
+        });
+        
+        // Close when clicking outside modal
+        window.addEventListener('click', (e) => {
+            if (e.target === termsModal) {
+                termsModal.classList.add('hidden');
+            }
+            if (e.target === policyModal) {
+                policyModal.classList.add('hidden');
+            }
+        });
+      </script>
 
     <script src="script.js"></script>
 </body>
